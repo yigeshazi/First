@@ -34,7 +34,7 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th ></th>
+                <th style="display:none;">标签ID</th>
                 <th>标签</th>
                 <th>文章个数</th>
                 <th>操作</th>
@@ -43,8 +43,8 @@
             <tbody>
             {% for tag in tag_list %}
             <tr cid="{{ tag.nid }}">
-                <td na="nid"></td>
-                <td na="title">{{ tag.title }}</td>
+                <td na='nid' style="display:none;" >{{ tag.nid }}</td>
+                <td na="title" >{{ tag.title }}</td>
                 <td>{{ tag.article_set.count }}</td>
                 <td >
                     <a class="btn btn-danger btn-xs del-row" >

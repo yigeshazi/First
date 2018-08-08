@@ -35,7 +35,7 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <td></td>
+                <td style="display:none;">标签ID</td>
                 <th>分类名称</th>
                 <th>文章数量</th>
                 <th>操作</th>
@@ -49,7 +49,7 @@
             <tbody>
             {% for cate in cate_list %}
                 <tr cid="{{ cate.nid }}">
-                    <td  na="nid"></td>
+                    <td  na="nid" style="display: none;">{{ cate.nid }}</td>
                     <td  na="title">{{ cate.title }}</td>
                     <td na="count">{{ cate.article_set.count }}</td>
 
