@@ -1,0 +1,165 @@
+{% extends 'home_layout.html' %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/plugins/kindeditor/themes/default/default.css"/>
+{% endblock %}
+
+{% block content %}
+    <div class="art-title">
+        <a>{{ article_obj.title }}</a>
+    </div>
+    <div class="art-content">
+        {{ content }}
+    </div>
+    <div class="art-recommend clearfix">
+        <div class="recommend">
+            <a href="#" class="up"
+               style="margin: 5px 10px;display: inline-block;padding: 5px 15px;border: 1px solid #dddddd;text-align: center;">
+                <i class="fa fa-thumbs-o-up fa-3" aria-hidden="true" style="font-size: 25px"></i>
+
+                <div>0</div>
+            </a>
+            <a href="#" class="down"
+               style="margin: 5px 30px 5px 10px;display: inline-block;padding: 5px 15px;border: 1px solid #dddddd;text-align: center;">
+                <i class="fa fa-thumbs-o-down fa-3" aria-hidden="true" style="font-size: 25px"></i>
+
+                <div>0</div>
+            </a>
+        </div>
+    </div>
+    <div class="art-tips clearfix">
+        <div class="tips">
+            <span class="ctime">{{ article_obj.create_time }}</span>
+            <a class="author">{{ user_obj.nickname }}</a>
+            <span class="comment-count">评论(0)</span>
+            <span class="read-count">阅读(0)</span>
+        </div>
+    </div>
+    <div id="AllanboltSignature">
+        <div style="border-bottom: #e0e0e0 1px dashed; border-left: #e0e0e0 1px dashed; padding: 10px; font-family: 微软雅黑; font-size: 11px; border-top: #e0e0e0 1px dashed; border-right: #e0e0e0 1px dashed; "
+             id="PSignature">
+            <div style="float:left;width:70px;">
+                <img src="/static/imgs/o_Warning.png" style="width:65px;height:65px">
+            </div>
+            <div style="float:left;padding-top:10px;">
+
+                <div style="padding: 1px">作者：<a href="#" target="_blank">{{ user_obj.nickname }}</a></div>
+                <div style="padding: 1px">出处：<a href="#" target="_blank">http://http://127.0.0.1:8000/{{ blog_obj.site }}/</a>
+                </div>
+                <div style="padding: 1px">本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文链接</div>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+    <div class="art-comment">
+        <div class="comment-title">
+            评论列表
+        </div>
+        <div class="comment-list">
+            {% for item in content_obj %}
+            <div class="comment-item">
+                <div class="reply-title clearfix">
+                    <div class="user-info">
+                        <span style="color: #399ab2;">#{{ forloop.counter }}</span>
+                         <span>{{ item.create_time }}</span>
+                        <span id="nickname"style="color: #399ab2;"> {{ item.user.nickname }}</span>
+                    </div>
+                    <div class="reply">
+                        <a  href="#" nid="{{ item.nid }}" onclick="Reply(this);">回复</a>
+                    </div>
+                </div>
+                <div class="reply-body" style="font-size: 12px;color:#888">
+                    {% if item.reply_id %}
+                        <div class="reply-user">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@{{ item.reply.user.nickname }}</div>
+                    {% endif %}
+                    <div class="content">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ item.content }}
+                    </div>
+                    <div style="margin-top: 30px"> </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="comment-list-pager">
+            <ul class="pagination">
+                <li><a href="#">&laquo;</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+        <div class="comment-area">
+            <div class="replay-comment-user"></div>
+                <div class="reply-area" style="position: relative;">
+                    {% if not request.session.user_info %}
+                        <div style="text-align:center;line-height:200px;position: absolute;top:0;left:0;right:0;bottom: 0;background-color: rgba(255,255,255,.6)">
+                            登录后才可以回帖 <a href="login.html">登录</a> | <a href="register.html">立即注册</a>
+                        </div>
+                    {% endif %}
+                    <textarea  name="content" style="width: 100%;height:200px;visibility:hidden;"></textarea>
+                </div>
+                <div class="reply-btn">
+                    <span><span>21</span>/255字</span>
+                    <a href="#" onclick="CommentSub();">发表回复</a>
+                    <div id="reply_id"></div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+
+{% block js %}
+    <script charset="utf-8" src="/static/plugins/kindeditor/kindeditor-min.js"></script>
+    <script charset="utf-8" src="/static/plugins/kindeditor/lang/zh_CN.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
+    <script>
+        var editor;
+        KindEditor.ready(function (K) {
+            editor = K.create('textarea[name="content"]', {
+                resizeType: 1,
+                allowPreviewEmoticons: false,
+                allowImageUpload: false,
+                items: [
+                    'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                    'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                    'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+            });
+        });
+
+        function CommentSub() {
+            var content =  $('iframe.ke-edit-iframe').contents().find('body').text();
+            var reply_id = $('#reply_id').attr('reply_id');
+            $.ajax({
+                url:'/update_comment.html',
+                type:'POST',
+                dataType:'JSON',
+                data:{'content':content,'article_id':{{article_obj.nid}},'reply_id':reply_id},
+                headers:{'X-CSRFtoken':$.cookie('csrftoken')},
+                success:function (arg) {
+
+                    if(arg['status']){
+                        location.reload()
+                    }
+                },
+                error:function () {
+                }
+            })
+        }
+
+        function Reply(ths) {
+            var name = $(ths).parent().prev().find('span#nickname').text();
+            var nickname ='@'+name+ " \n\r ";
+            console.log(nickname);
+            $('iframe.ke-edit-iframe').contents().find('body').text(nickname);
+            var nid = $(ths).attr('nid');
+            console.log(nid);
+            $('#reply_id').attr('reply_id',nid);
+        }
+
+    </script>
+{% endblock %}
+
+home_detail.html
