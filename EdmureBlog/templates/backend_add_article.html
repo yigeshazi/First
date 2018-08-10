@@ -7,6 +7,10 @@
             width: 100%;
             min-height: 500px;
         }
+
+        .error{
+            color: red;
+        }
     </style>
 {% endblock %}
 
@@ -18,19 +22,19 @@
     <div style="padding: 5px 8px;">
         <form method="POST" action="/backend/add-article.html" novalidate>
             <div class="form-group">
-                <label for="{{ form.title.id_for_label }}">标题 <span>{{ form.title.errors.0 }}</span></label>
+                <label for="{{ form.title.id_for_label }}">标题 <span class="error">{{ form.title.errors.0 }}</span></label>
                 {{ form.title }}
             </div>
             <div class="form-group">
-                <label for="summary">简介 <span>{{ form.summary.errors.0 }}</span></label>
+                <label for="summary">简介 <span class="error">{{ form.summary.errors.0 }}</span></label>
                 {{ form.summary }}
             </div>
             <div class="form-group">
-                <label for="content">内容 <span>{{ form.content.errors.0 }}</span></label>
+                <label for="content">内容 <span class="error">{{ form.content.errors.0 }}</span></label>
                 {{ form.content }}
             </div>
             <div class="form-group">
-                <label>类型 <span>{{ form.article_type_id.errors.0 }}</span></label>
+                <label>类型 <span class="error">{{ form.article_type_id.errors.0 }}</span></label>
 
                 <div>
                     {{ form.article_type_id }}
@@ -38,14 +42,14 @@
 
             </div>
             <div class="form-group">
-                <label>分类 <span>{{ form.category_id.errors.0 }}</span></label>
+                <label>分类 <span class="error">{{ form.category_id.errors.0 }}</span></label>
 
                 <div>
                     {{ form.category_id }}
                 </div>
             </div>
             <div class="form-group">
-                <label>标签 <span>{{ form.tags.errors.0 }}</span></label>
+                <label>标签 <span class="error">{{ form.tags.errors.0 }}</span></label>
 
                 <div>
                     {{ form.tags }}

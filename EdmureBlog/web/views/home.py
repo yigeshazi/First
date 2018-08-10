@@ -30,6 +30,7 @@ def index(request, *args, **kwargs):
 
     page_obj = Pagination(request.GET.get('p'),data_count)
     article_list = models.Article.objects.filter(**kwargs).order_by('-nid')[page_obj.start:page_obj.end]
+    article_list_by_comment=models.Article.objects.filter(**kwargs).order_by('-comment_count')
     page_str = page_obj.page_str(base_url)
 
     return render(

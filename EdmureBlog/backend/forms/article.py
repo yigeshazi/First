@@ -11,25 +11,37 @@ from repository import models
 
 class ArticleForm(django_forms.Form):
     title = django_fields.CharField(
-        widget=django_widgets.TextInput(attrs={'class': 'form-control', 'placeholder': '文章标题'})
+        widget=django_widgets.TextInput(attrs={'class': 'form-control', 'placeholder': '文章标题'}),
+        error_messages={'required': '标题不能为空',
+                        }
     )
     summary = django_fields.CharField(
-        widget=django_widgets.Textarea(attrs={'class': 'form-control', 'placeholder': '文章简介', 'rows': '3'})
+        widget=django_widgets.Textarea(attrs={'class': 'form-control', 'placeholder': '文章简介', 'rows': '3'}),
+        error_messages={'required': '简介不能为空',
+                        }
     )
     content = django_fields.CharField(
-        widget=django_widgets.Textarea(attrs={'class': 'kind-content'})
+        widget=django_widgets.Textarea(attrs={'class': 'kind-content','placeholder':'文章内容'}),
+        error_messages={'required': '内容不能为空',
+                        }
     )
     article_type_id = django_fields.IntegerField(
-        widget=django_widgets.RadioSelect(choices=models.Article.type_choices)
+        widget=django_widgets.RadioSelect(choices=models.Article.type_choices),
+        error_messages={'required': '请选择文章类型',
+                        }
     )
     category_id = django_fields.ChoiceField(
         choices=[],
-        widget=django_widgets.RadioSelect
+        widget=django_widgets.RadioSelect,
+        error_messages={'required': '请先添加分类信息',
+                        }
     )
 
     tags = django_fields.MultipleChoiceField(
         choices=[],
-        widget=django_widgets.CheckboxSelectMultiple
+        widget=django_widgets.CheckboxSelectMultiple,
+        error_messages={'required': '请先添加标签信息',
+                        }
     )
 
     def __init__(self, request, *args, **kwargs):
