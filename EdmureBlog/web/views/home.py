@@ -147,8 +147,6 @@ def detail(request, site, nid):
         return HttpResponse('文章不存在')
 
 import json
-from backend.auth.auth import check_login
-@check_login
 def update_comment(request):
     data = {'status':True,'message':None}
     user_id = request.session['user_info']['nid']
@@ -166,11 +164,11 @@ def update_comment(request):
 
         else:
             models.Comment.objects.create(user_id=user_id, content=content, article_id=article_id)
-            models.Article.objects.filter(nid=article_id).update(comment_count=F("up_count") + 1)
+            models.Article.objects.filter(nid=article_id).update(comment_count=F("comment_count") + 1)
     return HttpResponse(json.dumps(data))
 
 import re
-@check_login
+
 def content_handle(content):            #对评论内容进行处理
     obj = re.match('@.+\s', content)
     if obj:
@@ -184,7 +182,6 @@ def content_handle(content):            #对评论内容进行处理
         new_content = content
     return nickname,new_content
 
-@check_login
 def up_down(request):
     message = {"status": False,'msg':None}
     article_id = request.POST.get("aid")
