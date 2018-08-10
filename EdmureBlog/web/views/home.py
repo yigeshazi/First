@@ -163,11 +163,14 @@ def update_comment(request):
         if reply_id:
             comment_obj = models.Comment.objects.filter(article_id=article_id,nid=reply_id).first()
             models.Comment.objects.create(user_id=user_id, content=new_content, article_id=article_id,reply=comment_obj)
+
         else:
             models.Comment.objects.create(user_id=user_id, content=content, article_id=article_id)
+            models.Article.objects.filter(nid=article_id).update(comment_count=F("up_count") + 1)
     return HttpResponse(json.dumps(data))
 
 import re
+@check_login
 def content_handle(content):            #对评论内容进行处理
     obj = re.match('@.+\s', content)
     if obj:
@@ -182,22 +185,40 @@ def content_handle(content):            #对评论内容进行处理
     return nickname,new_content
 
 @check_login
-def updown(request):
-    article_id = request.POST.get("nid")
-    user_id = request.POST.get('uid')
-    is_up = bool(request.POST.get("is_up"))
-    response = {"status": True}
-    try:
-        up=models.UpDown.objects.filter(article_id=article_id,user_id=user_id).values('up')
-        if up:
+def up_down(request):
+    message = {"status": False,'msg':None}
+    article_id = request.POST.get("aid")
+    user_id = request.session['user_info']['nid']
+    is_up = request.POST.get("is_up")
+    is_up=json.loads(is_up)
+    print(article_id,user_id,is_up)
+    obj=models.UpDown.objects.filter(article_id=article_id,user_id=user_id).first()
+    if obj:#不是第一次对文章进行点赞或取消点赞操作，即数据库中已有记录
+        if obj.up:
+            obj.up=False
+            obj.save()
             models.Article.objects.filter(nid=article_id).update(up_count=F("up_count") - 1)
-            models.UpDown.objects.filter(user_id=user_id, article_id=article_id).update(up=False)
-            response['status']=False
+
         else:
-            models.UpDown.objects.create(user_id=user_id, article_id=article_id, up=is_up)
+            obj.up=True
+            obj.save()
             models.Article.objects.filter(nid=article_id).update(up_count=F("up_count") + 1)
+            message['status'] = True
+    else:#第一次对文章点赞
+        models.UpDown.objects.create(article_id=article_id,user_id=user_id,up=is_up)
+        models.Article.objects.filter(nid=article_id).update(up_count=F("up_count") + 1)
+        message['status'] = True
 
-    except Exception as e:
-        pass
-
-    return HttpResponse(json.dumps(response))
+    return HttpResponse(json.dumps(message))
+    # try:
+    #     up=models.UpDown.objects.filter(article_id=article_id,user_id=user_id).values('up')
+    #     if up:
+    #         models.Article.objects.filter(nid=article_id).update(up_count=F("up_count") - 1)
+    #         models.UpDown.objects.filter(user_id=user_id, article_id=article_id).update(up=False)
+    #         response['status']=False
+    #     else:
+    #         models.UpDown.objects.create(user_id=user_id, article_id=article_id, up=is_up)
+    #         models.Article.objects.filter(nid=article_id).update(up_count=F("up_count") + 1)
+    #
+    # except Exception as e:
+    #     pass

@@ -77,7 +77,7 @@ class UpDown(models.Model):
     """
     article = models.ForeignKey(verbose_name='文章', to='Article', to_field='nid',on_delete=None)
     user = models.ForeignKey(verbose_name='点赞用户', to='UserInfo', to_field='nid',on_delete=None)
-    up = models.BooleanField(verbose_name='是否赞')
+    up = models.BooleanField(verbose_name='是否赞',default=False)
 
     class Meta:
         unique_together = [

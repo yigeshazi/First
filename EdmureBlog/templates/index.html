@@ -29,18 +29,18 @@
                             {{ row.summary }}
                         </div>
                         <div class="footers">
-                            <a href="{{ row.blog.site }}">
+                            <a href="{{ row.blog.site }}.html">
                                 <i class="fa fa-user-o" aria-hidden="true"></i>
                                 <span>{{ row.blog.user.nickname }}</span>
                             </a>
                             <span>发表于{{ row.create_time|date:"Y-m-d H:i:s" }}</span>
-                            <a href="#" class="ele" id="comment">
+                            <a  class="ele" id="comment" href="{{ row.blog.site }}/{{ row.nid }}.html">
                                 <i class="fa fa-commenting-o" aria-hidden="true"></i>
-                                <span>评论{{ row.comment_count }}</span>
+                                评论{{ row.comment_count }}
                             </a>
-                            <a href="#" class="ele"  id="up_down" nn="{{ row.nid }}">
+                            <a  class="ele diggit" na="{{ row.nid }}">
                                 <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                                <span id="uc">点赞{{ row.up_count }}</span>
+                                {{ row.up_count }}
                             </a>
                         </div>
 
@@ -95,35 +95,42 @@
         </div>
     </div>
 </div>
-{#<script>#}
-{#    $(function () {#}
-{#        bindUpDown();#}
-{#    });#}
-{##}
-{#    function bindUpDown() {#}
-{#        $('#up_down').click(function () {#}
-{#            var aid=$(this).attr('na');#}
-{#            var uid={{ request.session.user_info.nid }};#}
-{#            $.ajax({#}
-{#                url:'up-down.html',#}
-{#                data:{'article_id':aid,'user_id':uid},#}
-{#                type:'POST',#}
-{#                dataType:'JSON',#}
-{#                success:function (arg) {#}
-{#                    if(arg.status){#}
-{#                        var cup={{ row.up_count }}+1;#}
-{#                        $('#uc').text(cup)#}
-{#                    }else{#}
-{#                        if({{ row.up_count }}=0){#}
-{#                            var aup={{ row.up_count }};#}
-{#                            $('#uc').text(aup)#}
-{#                        }#}
-{#                    }else if#}
-{#                }#}
-{#            })#}
-{#        })#}
-{#    }#}
-{#</script>#}
+
+
+<script>
+    $(function () {
+        bindUpDown();
+    });
+
+    function bindUpDown() {
+        $('.diggit').click(function () {
+            var is_up=$(this).hasClass('diggit');
+            var aid=$(this).attr('na');
+            var cou='{{ row.up_count }}';
+            console.log(is_up);
+            console.log(aid);
+            console.log(cou);
+            $.ajax({
+                url:'/up-down.html',
+                data:{'is_up':is_up,'aid':aid},
+                type:'POST',
+                dataType:'JSON',
+                success:function (arg) {
+                    console.log(arg);
+                    if(arg.status){
+                        cou=parseInt(cou)+1;
+                        {#$('#up_down').text(cou);#}
+                        window.location.reload();
+                    }
+                    else{
+                        cou=parseInt(cou)-1;
+                        window.location.reload();
+                    }
+                }
+            })
+        })
+    }
+</script>
 
 
 

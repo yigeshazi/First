@@ -11,28 +11,22 @@
     <div class="art-content">
         {{ content }}
     </div>
-    <div class="art-recommend clearfix">
+    <div class="art-recommend clearfix diggit" id="up_down">
         <div class="recommend">
-            <a href="#" class="up"
+            <div  class="up" id="detail-up"
                style="margin: 5px 10px;display: inline-block;padding: 5px 15px;border: 1px solid #dddddd;text-align: center;">
                 <i class="fa fa-thumbs-o-up fa-3" aria-hidden="true" style="font-size: 25px"></i>
 
-                <div>0</div>
-            </a>
-            <a href="#" class="down"
-               style="margin: 5px 30px 5px 10px;display: inline-block;padding: 5px 15px;border: 1px solid #dddddd;text-align: center;">
-                <i class="fa fa-thumbs-o-down fa-3" aria-hidden="true" style="font-size: 25px"></i>
+                <div id="up">{{ article_obj.up_count }}</div>
+            点赞</div>
 
-                <div>0</div>
-            </a>
         </div>
     </div>
     <div class="art-tips clearfix">
         <div class="tips">
-            <span class="ctime">{{ article_obj.create_time }}</span>
+            <span class="ctime">{{ article_obj.create_time|date:"Y-m-d H:i:s" }}</span>
             <a class="author">{{ user_obj.nickname }}</a>
-            <span class="comment-count">评论(0)</span>
-            <span class="read-count">阅读(0)</span>
+            <span class="comment-count">评论({{ article_obj.comment_count }})</span>
         </div>
     </div>
     <div id="AllanboltSignature">
@@ -61,7 +55,7 @@
                 <div class="reply-title clearfix">
                     <div class="user-info">
                         <span style="color: #399ab2;">#{{ forloop.counter }}</span>
-                         <span>{{ item.create_time }}</span>
+                         <span>{{ item.create_time|date:"Y-m-d H:i:s" }}</span>
                         <span id="nickname"style="color: #399ab2;"> {{ item.user.nickname }}</span>
                     </div>
                     <div class="reply">
@@ -103,7 +97,7 @@
                 </div>
                 <div class="reply-btn">
                     <span><span>21</span>/255字</span>
-                    <a href="#" onclick="CommentSub();">发表回复</a>
+                    <a  href="#" onclick="CommentSub();">发表回复</a>
                     <div id="reply_id"></div>
                 </div>
             </div>
@@ -158,6 +152,34 @@
             console.log(nid);
             $('#reply_id').attr('reply_id',nid);
         }
+
+        $(function () {
+            bindUpDown();
+        });
+
+        function bindUpDown(){
+            $('#up_down').click(function () {
+            var aid='{{ article_obj.nid }}';
+            var is_up=$(this).hasClass('diggit');
+            var cou=$('#up').text();
+            $.ajax({
+                url:'/up-down.html',
+                data:{'aid':aid,'is_up':is_up},
+                type:'POST',
+                dataType:'JSON',
+                success:function (arg) {
+                    if(arg.status){
+                        cou=parseInt(cou)+1;
+                        $('#up').text(cou);
+                    }
+                    else{
+                        cou=parseInt(cou)-1;
+                        $('#up').text(cou);
+                    }
+                }
+            })
+        })}
+
 
     </script>
 {% endblock %}
