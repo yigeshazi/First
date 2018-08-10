@@ -67,16 +67,25 @@
       <file leaf-file-name="backend_add_article.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/backend_add_article.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
+            <state relative-caret-position="432">
               <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="article.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="header.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/include/header.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="article.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/forms/article.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="587">
+            <state relative-caret-position="371">
               <caret line="29" column="33" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="33" />
             </state>
           </provider>
@@ -169,11 +178,11 @@
         <option value="$PROJECT_DIR$/templates/backend_layout.html" />
         <option value="$PROJECT_DIR$/test_auto_register.py" />
         <option value="$PROJECT_DIR$/bug统计.txt" />
-        <option value="$PROJECT_DIR$/templates/include/header.html" />
         <option value="$PROJECT_DIR$/web/views/home.py" />
         <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/templates/backend_add_article.html" />
         <option value="$PROJECT_DIR$/backend/forms/article.py" />
+        <option value="$PROJECT_DIR$/templates/include/header.html" />
       </list>
     </option>
   </component>
@@ -186,7 +195,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="-5" />
     <option name="y" value="7" />
     <option name="width" value="1346" />
@@ -215,6 +224,17 @@
               <item name="EdmureBlog" type="462c0819:PsiDirectoryNode" />
               <item name="backend" type="462c0819:PsiDirectoryNode" />
               <item name="forms" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="EdmureBlog" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EdmureBlog" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="EdmureBlog" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EdmureBlog" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="EdmureBlog" type="b2602c69:ProjectViewProjectNode" />
@@ -426,7 +446,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-5" y="7" width="1346" height="706" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -436,9 +456,9 @@
       <window_info anchor="bottom" id="Python Console" order="14" weight="0.32881355" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.499183" weight="0.086440675" />
       <window_info anchor="bottom" id="Terminal" order="15" sideWeight="0.499183" weight="0.24275362" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1870229" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23233908" />
       <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" order="3" visible="true" weight="0.003816794" />
+      <window_info anchor="right" id="Database" order="3" visible="true" weight="0.003924647" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.33898306" />
       <window_info anchor="right" id="SciView" order="4" weight="0.32977098" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -708,13 +728,6 @@
     <entry file="file://$PROJECT_DIR$/backend/templatetags/search.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/include/header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://afa700f8-76d7-41ac-b75d-72ffbb3cbd5d/schema/&amp;empty;@#1/table/repository_article">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -770,17 +783,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/backend/forms/article.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="29" column="33" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/backend_add_article.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
+        <state relative-caret-position="432">
           <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/forms/article.py">
+    <entry file="file://$PROJECT_DIR$/templates/include/header.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="587">
-          <caret line="29" column="33" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="33" />
+        <state relative-caret-position="270">
+          <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
         </state>
       </provider>
     </entry>
