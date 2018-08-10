@@ -29,10 +29,10 @@
             <div class="notice-header">公告</div>
             <div class="notice-body">
                 <ul>
-                    <li>昵称：{{ blog.user.nickname }}</li>
+                    <li>昵称：{{ request.session.user_info.nickname }}</li>
                     <li>粉丝：{{ blog.user.fans.count }}</li>
                     <li>关注：{{ blog.user.f.count }}</li>
-                    <li>邮箱：{{ blog.user.email }}</li>
+                    <li>邮箱：{{ request.session.user_info.email }}</li>
                 </ul>
                 <div class="memo">
                     Anything you had done to make your life better ?
